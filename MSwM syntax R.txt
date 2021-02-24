@@ -1,0 +1,125 @@
+#BBCA
+bbca.data <- read.csv("C:/Users/Ardya Novi/OneDrive/Documents/Back up ID & Doc/MMT Business Analytics/Predictive Analytics & Machine Learning/Tugas MSWM/BBCA.csv")
+bbca <- c(bbca.data$BBCA_close)
+head(bbca)
+ts.plot(bbca)
+length(bbca)
+library(tseries)
+library(MSwM)
+adf.test(bbca)
+
+#data stationarity
+bbca.diff=diff(bbca)
+ts.plot(bbca.diff)
+length(bbca.diff)
+adf.test(bbca.diff)
+terasvirta.test(as.ts(bbca.diff))
+
+#data lag preparation
+bbca.diff.lag0=bbca.diff[4:3954]
+bbca.diff.lag1=bbca.diff[3:3953]
+bbca.diff.lag2=bbca.diff[2:3952]
+bbca.diff.lag3=bbca.diff[1:3951]
+
+#AR1 modeling for each regime
+model.ar1<-lm(bbca.diff.lag0 ~ bbca.diff.lag1)
+summary(model.ar1)
+model.mswm.AR1K2=msmFit(model.ar1, k=2, sw=rep(TRUE,3))
+summary(model.mswm.AR1K2)
+model.mswm.AR1K3=msmFit(model.ar1, k=3, sw=rep(TRUE,3))
+summary(model.mswm.AR1K3)
+model.mswm.AR1K4=msmFit(model.ar1, k=4, sw=rep(TRUE,3))
+summary(model.mswm.AR1K4)
+model.mswm.AR1K5=msmFit(model.ar1, k=5, sw=rep(TRUE,3))
+summary(model.mswm.AR1K5)
+
+#AR2 modeling for each regime
+model.ar2<-lm(bbca.diff.lag0 ~ bbca.diff.lag1+bbca.diff.lag2)
+summary(model.ar2)
+model.mswm.AR2K2=msmFit(model.ar2, k=2, sw=rep(TRUE,4))
+summary(model.mswm.AR2K2)
+model.mswm.AR2K3=msmFit(model.ar2, k=3, sw=rep(TRUE,4))
+summary(model.mswm.AR2K3)
+model.mswm.AR2K4=msmFit(model.ar2, k=4, sw=rep(TRUE,4))
+summary(model.mswm.AR2K4)
+model.mswm.AR2K5=msmFit(model.ar2, k=5, sw=rep(TRUE,4))
+summary(model.mswm.AR2K5)
+
+#AR3 modeling for each regime
+model.ar3<-lm(bbca.diff.lag0 ~ bbca.diff.lag1+bbca.diff.lag2+bbca.diff.lag3)
+summary(model.ar3)
+model.mswm.AR3K2=msmFit(model.ar3, k=2, sw=rep(TRUE,5))
+summary(model.mswm.AR3K2)
+model.mswm.AR3K3=msmFit(model.ar3, k=3, sw=rep(TRUE,5))
+summary(model.mswm.AR3K3)
+model.mswm.AR3K4=msmFit(model.ar3, k=4, sw=rep(TRUE,5))
+summary(model.mswm.AR3K4)
+model.mswm.AR3K5=msmFit(model.ar3, k=5, sw=rep(TRUE,5))
+summary(model.mswm.AR3K5)
+
+#labeling for ARLexcel
+labelAR1K4=matrix(nrow=3951,ncol=4)
+labelAR1K4=model.mswm.AR1K4@Fit@filtProb
+write.csv(labelAR1K4,file="C:/Users/Ardya Novi/OneDrive/Documents/Back up ID & Doc/MMT Business Analytics/Predictive Analytics & Machine Learning/Tugas MSWM/label_BBCA_AR1K4.csv")
+
+#BBRI
+bbri.data <- read.csv("C:/Users/Ardya Novi/OneDrive/Documents/Back up ID & Doc/MMT Business Analytics/Predictive Analytics & Machine Learning/Tugas MSWM/BBRI.csv")
+bbri <- c(bbri.data$BBRI)
+head(bbri)
+ts.plot(bbri)
+length(bbri)
+adf.test(bbri)
+
+#data stationarity
+bbri.diff=diff(bbri)
+ts.plot(bbri.diff)
+length(bbri.diff)
+adf.test(bbri.diff)
+terasvirta.test(as.ts(bbri.diff))
+
+#data lag preparation
+bbri.diff.lag0=bbri.diff[4:4093]
+bbri.diff.lag1=bbri.diff[3:4092]
+bbri.diff.lag2=bbri.diff[2:4091]
+bbri.diff.lag3=bbri.diff[1:4090]
+
+#AR1 modeling for each regime
+model.ar1<-lm(bbri.diff.lag0 ~ bbri.diff.lag1)
+summary(model.ar1)
+model.mswm.AR1K2=msmFit(model.ar1, k=2, sw=rep(TRUE,3))
+summary(model.mswm.AR1K2)
+model.mswm.AR1K3=msmFit(model.ar1, k=3, sw=rep(TRUE,3))
+summary(model.mswm.AR1K3)
+model.mswm.AR1K4=msmFit(model.ar1, k=4, sw=rep(TRUE,3))
+summary(model.mswm.AR1K4)
+model.mswm.AR1K5=msmFit(model.ar1, k=5, sw=rep(TRUE,3))
+summary(model.mswm.AR1K5)
+
+#AR2 modeling for each regime
+model.ar2<-lm(bbri.diff.lag0 ~ bbri.diff.lag1+bbri.diff.lag2)
+summary(model.ar2)
+model.mswm.AR2K2=msmFit(model.ar2, k=2, sw=rep(TRUE,4))
+summary(model.mswm.AR2K2)
+model.mswm.AR2K3=msmFit(model.ar2, k=3, sw=rep(TRUE,4))
+summary(model.mswm.AR2K3)
+model.mswm.AR2K4=msmFit(model.ar2, k=4, sw=rep(TRUE,4))
+summary(model.mswm.AR2K4)
+model.mswm.AR2K5=msmFit(model.ar2, k=5, sw=rep(TRUE,4))
+summary(model.mswm.AR2K5)
+
+#AR3 modeling for each regime
+model.ar3<-lm(bbri.diff.lag0 ~ bbri.diff.lag1+bbri.diff.lag2+bbri.diff.lag3)
+summary(model.ar3)
+model.mswm.AR3K2=msmFit(model.ar3, k=2, sw=rep(TRUE,5))
+summary(model.mswm.AR3K2)
+model.mswm.AR3K3=msmFit(model.ar3, k=3, sw=rep(TRUE,5))
+summary(model.mswm.AR3K3)
+model.mswm.AR3K4=msmFit(model.ar3, k=4, sw=rep(TRUE,5))
+summary(model.mswm.AR3K4)
+model.mswm.AR3K5=msmFit(model.ar3, k=5, sw=rep(TRUE,5))
+summary(model.mswm.AR3K5)
+
+#labeling for ARLexcel
+labelAR3K2=matrix(nrow=4090,ncol=2)
+labelAR3K2=model.mswm.AR3K2@Fit@filtProb
+write.csv(labelAR3K2,file="C:/Users/Ardya Novi/OneDrive/Documents/Back up ID & Doc/MMT Business Analytics/Predictive Analytics & Machine Learning/Tugas MSWM/label_BBRI_AR3K2.csv")
